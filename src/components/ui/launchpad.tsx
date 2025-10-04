@@ -15,9 +15,9 @@ const LAUNCHPAD_CONFIG: COBEOptions = {
   dark: 1,
   diffuse: 1.2,
   mapSamples: 16000,
-  mapBrightness: 6,
+  mapBrightness: 3,
   baseColor: [0.3, 0.3, 0.3],
-  markerColor: [251 / 255, 100 / 255, 21 / 255],
+  markerColor: [59 / 255, 130 / 255, 246 / 255],
   glowColor: [1, 1, 1],
   markers: [
     { location: [14.5995, 120.9842], size: 0.03 },
