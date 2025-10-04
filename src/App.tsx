@@ -1,8 +1,10 @@
-import { Home, Lightbulb, Rocket, Search, Sparkles } from "lucide-react"
+import { Home, Lightbulb, Rocket, Search, Sparkles, Mail, Github, Twitter } from "lucide-react"
 import { Launchpad } from "@/components/ui/launchpad"
 import { NavBar } from "@/components/ui/tubelight-navbar"
 import DisplayCards from "@/components/ui/display-cards"
-import { useState } from "react"
+import { HowItWorksSection } from "@/components/ui/how-it-works-section"
+import { WebGLShader } from "@/components/ui/web-gl-shader"
+import { useState, useEffect } from "react"
 
 interface Startup {
   id: number
@@ -20,8 +22,7 @@ function App() {
   const navItems = [
     { name: "Home", url: "#home", icon: Home },
     { name: "Why", url: "#why", icon: Sparkles },
-    { name: "Explore Startups", url: "#explore", icon: Search },
-    { name: "Upload Ideas", url: "#upload", icon: Lightbulb },
+    { name: "How", url: "#how-it-works", icon: Lightbulb },
     { name: "About", url: "#about", icon: Rocket },
   ]
 
@@ -157,15 +158,35 @@ function App() {
     return `$${amount}`
   }
 
+  const [scrollY, setScrollY] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Calculate globe opacity and position based on scroll
+  const globeOpacity = Math.max(0, 1 - scrollY / 800)
+  const globeTranslateY = -scrollY * 0.5
+
   return (
     <div className="relative bg-black text-white">
-      {/* Navbar at Top - Only visible on home section */}
-      <div className="absolute top-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-screen-xl px-4">
+      {/* Navbar at Top - Fixed on all pages */}
+      <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-screen-xl px-4">
         <NavBar items={navItems} className="!relative !top-0 !left-0 !translate-x-0 !mb-0" />
       </div>
 
-      {/* Fixed Globe Background - Only visible on home section */}
-      <div className="fixed inset-0 flex items-center justify-center pointer-events-none -mt-20">
+      {/* Fixed Globe Background - Moves up on scroll */}
+      <div 
+        className="fixed inset-0 flex items-center justify-center pointer-events-none -mt-20 transition-all duration-300"
+        style={{
+          opacity: globeOpacity,
+          transform: `translateY(${globeTranslateY}px)`
+        }}
+      >
         {/* Gradient Glow */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div 
@@ -186,28 +207,44 @@ function App() {
           <h1 className="text-7xl md:text-9xl font-bold tracking-wider mb-6 text-white uppercase drop-shadow-[0_0_30px_rgba(255,255,255,0.5)]">
             Launchpad
           </h1>
-          <p className="text-xl md:text-2xl text-white font-light max-w-3xl mx-auto drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-            Where your ideas meet opportunities
+          <p className="text-lg md:text-xl text-white font-light max-w-4xl mx-auto drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] text-center px-4 mb-12">
+            Where ideas meet opportunities, Launch your startup from any part of the globe
           </p>
+          
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
+            <a
+              href="#explore"
+              className="bg-gradient-to-br from-purple-600 via-purple-700 to-purple-900 text-white py-3 px-8 rounded-lg font-medium text-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.8)] hover:scale-105"
+            >
+              Explore Startups
+            </a>
+            <a
+              href="#upload"
+              className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 text-white py-3 px-8 rounded-lg font-medium text-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] hover:scale-105"
+            >
+              Upload Ideas
+            </a>
+          </div>
         </div>
       </section>
 
       {/* Why Launchpad Section */}
       <section id="why" className="relative min-h-screen bg-black flex items-center justify-center px-4 py-20">
-        <div className="max-w-7xl w-full border-2 border-white/30 rounded-3xl p-12 shadow-[0_0_40px_rgba(255,255,255,0.2)]">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="max-w-7xl w-full border-2 border-white/30 rounded-3xl p-8 md:p-12 shadow-[0_0_40px_rgba(255,255,255,0.2)]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Left Side - Text Content */}
             <div className="space-y-6">
-              <h2 className="text-5xl font-bold text-white mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
                 Why Launchpad?
               </h2>
-              <p className="text-lg text-white/80 leading-relaxed">
+              <p className="text-base md:text-lg text-white/80 leading-relaxed">
                 LaunchPad is built to give founders, creators, and dreamers a real chance to take their ideas forward without needing huge funding or complicated networks. Unlike traditional startup platforms, LaunchPad focuses on micro-support — where everyday people can back ideas with small contributions, helping creators validate, improve, and showcase their projects.
               </p>
             </div>
 
             {/* Right Side - Display Cards */}
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center -mt-8">
               <DisplayCards cards={[
                 {
                   icon: <Sparkles className="size-4 text-purple-300" />,
@@ -242,6 +279,16 @@ function App() {
               ]} />
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section id="how-it-works" className="relative min-h-screen bg-black flex flex-col items-center justify-center px-4 py-20">
+        <div className="max-w-7xl w-full border-2 border-white/30 rounded-3xl p-8 md:p-12 shadow-[0_0_40px_rgba(255,255,255,0.2)]">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center">
+            How It Works?
+          </h2>
+          <HowItWorksSection />
         </div>
       </section>
 
@@ -530,19 +577,74 @@ function App() {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="relative min-h-screen bg-black flex flex-col items-center justify-center px-4 py-20">
+      {/* About Section with WebGL Background */}
+      <section id="about" className="relative min-h-screen flex flex-col items-center justify-center px-4 py-20 overflow-hidden">
+        <WebGLShader />
+        
         <div className="max-w-4xl w-full text-center z-10 relative">
-          <h2 className="text-4xl font-bold tracking-tight mb-8 text-white">About Launchpad</h2>
-          <p className="text-xl text-white/80 leading-relaxed mb-8">
+          <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-8 text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
+            About Launchpad
+          </h2>
+          <p className="text-xl text-white/90 leading-relaxed mb-8 drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">
             Launchpad is a global platform connecting innovative startups with opportunities worldwide.
             We believe in the power of ideas and the potential of entrepreneurs to change the world.
           </p>
-          <p className="text-lg text-white/60 leading-relaxed">
+          <p className="text-lg text-white/70 leading-relaxed mb-12 drop-shadow-[0_0_15px_rgba(255,255,255,0.15)]">
             Submit your startup idea, connect with investors, and watch your vision come to life. 
             Every great company started with a single idea—let's make yours the next success story.
           </p>
         </div>
+
+        {/* Footer */}
+        <footer className="relative z-10 w-full max-w-7xl mx-auto mt-20 border-t border-white/20 pt-12 pb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+            {/* Brand */}
+            <div>
+              <h3 className="text-2xl font-bold text-white mb-4">Launchpad</h3>
+              <p className="text-white/60 text-sm">
+                Where ideas meet opportunities. Launch your startup from any part of the globe.
+              </p>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
+              <ul className="space-y-2">
+                <li><a href="#home" className="text-white/60 hover:text-white transition-colors">Home</a></li>
+                <li><a href="#why" className="text-white/60 hover:text-white transition-colors">Why Launchpad</a></li>
+                <li><a href="#how-it-works" className="text-white/60 hover:text-white transition-colors">How It Works</a></li>
+                <li><a href="#explore" className="text-white/60 hover:text-white transition-colors">Explore Startups</a></li>
+                <li><a href="#upload" className="text-white/60 hover:text-white transition-colors">Upload Ideas</a></li>
+              </ul>
+            </div>
+
+            {/* Connect */}
+            <div>
+              <h4 className="text-lg font-semibold text-white mb-4">Connect</h4>
+              <div className="flex gap-4">
+                <a href="#" className="text-white/60 hover:text-white transition-colors">
+                  <Mail className="w-6 h-6" />
+                </a>
+                <a href="#" className="text-white/60 hover:text-white transition-colors">
+                  <Github className="w-6 h-6" />
+                </a>
+                <a href="#" className="text-white/60 hover:text-white transition-colors">
+                  <Twitter className="w-6 h-6" />
+                </a>
+              </div>
+              <p className="text-white/60 text-sm mt-4">
+                contact@launchpad.com
+              </p>
+            </div>
+          </div>
+
+          {/* Copyright */}
+          <div className="mt-12 pt-8 border-t border-white/10 text-center">
+            <p className="text-white/50 text-sm">
+              © 2024 Launchpad. All rights reserved.
+            </p>
+          </div>
+        </footer>
       </section>
     </div>
   )
