@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useNavigate } from "react-router-dom"
 
 interface NavItem {
   name: string
@@ -18,6 +19,18 @@ interface NavBarProps {
 
 export function NavBar({ items, className }: NavBarProps) {
   const [activeTab, setActiveTab] = useState(items[0].name)
+  const navigate = useNavigate()
+
+  const handleClick = (item: NavItem, e: React.MouseEvent<HTMLAnchorElement>) => {
+    setActiveTab(item.name)
+    
+    // Check if it's a route (starts with /) or a hash link
+    if (item.url.startsWith('/')) {
+      e.preventDefault()
+      navigate(item.url)
+    }
+    // For hash links, let the default behavior work
+  }
 
   return (
     <div
@@ -35,7 +48,7 @@ export function NavBar({ items, className }: NavBarProps) {
             <a
               key={item.name}
               href={item.url}
-              onClick={() => setActiveTab(item.name)}
+              onClick={(e) => handleClick(item, e)}
               className={cn(
                 "relative cursor-pointer text-sm font-semibold px-6 py-2 rounded-full transition-colors",
                 "text-gray-600 hover:text-gray-900",
@@ -70,4 +83,3 @@ export function NavBar({ items, className }: NavBarProps) {
       </div>
     </div>
   )
-}
