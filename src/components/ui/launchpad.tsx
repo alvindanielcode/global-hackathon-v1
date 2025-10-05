@@ -64,7 +64,7 @@ export function Launchpad({
 
   const onRender = useCallback(
     (state: Record<string, any>) => {
-      if (!pointerInteracting.current) phi += 0.005
+      if (!pointerInteracting.current) phi += 0.00375
       state.phi = phi + r
       state.width = width * 2
       state.height = width * 2
