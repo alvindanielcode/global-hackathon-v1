@@ -381,7 +381,7 @@ export default function ExploreStartupsNew() {
                   <div className="flex items-center gap-2 mb-1">
                     <Shield className="w-4 h-4 text-amber-400" />
                     <span className="text-xs font-semibold text-amber-400 uppercase">Protected Idea</span>
-                    {startup.verified && <CheckCircle className="w-4 h-4 text-purple-400" />}
+                    {startup.verified && <CheckCircle className="w-4 h-4 text-green-400" />}
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock className="w-3 h-3 text-amber-300/70" />
@@ -418,7 +418,7 @@ export default function ExploreStartupsNew() {
                       </a>
                     )}
                     {startup.socials.website && (
-                      <a href={`https://${startup.socials.website}`} className="text-purple-400 hover:text-purple-300 p-2 hover:bg-white/10 rounded-full transition-colors touch-manipulation" target="_blank" rel="noopener noreferrer">
+                      <a href={`https://${startup.socials.website}`} className="text-green-400 hover:text-green-300 p-2 hover:bg-white/10 rounded-full transition-colors touch-manipulation" target="_blank" rel="noopener noreferrer">
                         <Globe className="w-5 h-5" />
                       </a>
                     )}
@@ -434,7 +434,7 @@ export default function ExploreStartupsNew() {
                   <div className="flex justify-between items-center">
                     <div>
                       <p className="text-xs text-white/60">Funds Raised</p>
-                      <p className="text-purple-400 font-bold text-base sm:text-lg">{startup.fundsAccumulated}</p>
+                      <p className="text-green-400 font-bold text-base sm:text-lg">{startup.fundsAccumulated}</p>
                     </div>
                   </div>
                 </div>
@@ -665,7 +665,7 @@ export default function ExploreStartupsNew() {
                     <div key={idx} className="bg-white/5 rounded-lg p-3">
                       <div className="flex justify-between items-center">
                         <p className="font-semibold text-purple-300 text-sm sm:text-base">{funder.name}</p>
-                        <p className="text-purple-400 font-bold text-sm sm:text-base">${funder.amount.toLocaleString()}</p>
+                        <p className="text-green-400 font-bold text-sm sm:text-base">${funder.amount.toLocaleString()}</p>
                       </div>
                       <p className="text-xs text-white/40">{funder.date}</p>
                     </div>
@@ -750,7 +750,7 @@ export default function ExploreStartupsNew() {
       {/* Success Animation Modal */}
       {showSuccess && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
-          <div className="bg-gradient-to-br from-purple-600 to-purple-700 p-8 rounded-2xl text-center animate-bounce shadow-2xl max-w-md">
+          <div className="bg-gradient-to-br from-green-600 to-emerald-600 p-8 rounded-2xl text-center animate-bounce shadow-2xl max-w-md">
             <CheckCircle className="w-16 h-16 text-white mx-auto mb-4" />
             <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">Idea Protected! 🎉</h3>
             <p className="text-white/90 text-sm sm:text-base mb-4">Your idea is now timestamped and protected with copyright</p>

@@ -95,13 +95,13 @@ export default function HomePage() {
             {/* Problem Statement */}
             <div className="text-center">
               <div className="inline-block mb-3 sm:mb-4">
-                <span className="text-xs sm:text-sm font-semibold text-red-600 uppercase tracking-wider bg-red-600/10 px-4 py-1.5 rounded-full border border-red-600/30">
+                <span className="text-xs sm:text-sm font-semibold text-red-400 uppercase tracking-wider bg-red-500/10 px-4 py-1.5 rounded-full border border-red-500/30">
                   The Problem
                 </span>
               </div>
               <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-relaxed">
                 Good ideas often fail because people don't have an easy way to{" "}
-                <span className="text-red-600 underline decoration-red-600/50 decoration-2 underline-offset-4">
+                <span className="text-red-400 underline decoration-red-400/50 decoration-2 underline-offset-4">
                   share, get feedback, or find support
                 </span>
                 .
@@ -116,19 +116,19 @@ export default function HomePage() {
             {/* Solution */}
             <div className="text-center">
               <div className="inline-block mb-3 sm:mb-4">
-                <span className="text-xs sm:text-sm font-semibold text-green-500 uppercase tracking-wider bg-green-500/10 px-4 py-1.5 rounded-full border border-green-500/30">
+                <span className="text-xs sm:text-sm font-semibold text-green-400 uppercase tracking-wider bg-green-500/10 px-4 py-1.5 rounded-full border border-green-500/30">
                   The Solution
                 </span>
               </div>
               <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-relaxed">
                 LaunchPad helps ideas get{" "}
-                <span className="text-green-500 underline decoration-green-500/50 decoration-2 underline-offset-4">
+                <span className="text-green-400 underline decoration-green-400/50 decoration-2 underline-offset-4">
                   noticed, supported, and launched
                 </span>
                 {" "}with{" "}
                 <span className="relative inline-block">
-                  <span className="text-green-500 font-black">automatic copyright protection</span>
-                  <Shield className="inline w-5 h-5 sm:w-6 sm:h-6 ml-2 text-green-500 animate-pulse" />
+                  <span className="text-amber-400 font-black">automatic copyright protection</span>
+                  <Shield className="inline w-5 h-5 sm:w-6 sm:h-6 ml-2 text-amber-400 animate-pulse" />
                 </span>
                 .
               </p>
