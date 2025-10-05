@@ -63,7 +63,7 @@ export default function HomePage() {
             Launchpad
           </h1>
           <p className="text-lg md:text-xl text-white font-light max-w-4xl mx-auto drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] text-center px-4 mb-12">
-            Where ideas meet opportunities.Launch your startup from any part of the globe.
+          Where ideas meet opportunities, launch your startup from any part of the globe.
           </p>
           
           <div className="flex justify-center items-center mt-8">
@@ -85,7 +85,7 @@ export default function HomePage() {
                 Why Launchpad?
               </h2>
               <p className="text-base md:text-lg text-white/80 leading-relaxed">
-                LaunchPad is built to give founders, creators, and dreamers a real chance to take their ideas forward without needing huge funding or complicated networks.
+              LaunchPad is a digital platform where innovators can present their startup ideas, protect them with an automatic copyright timestamp, and gain early support from the public. It acts as a bridge between idea-stage founders and supporters by allowing micro-funding, feedback, and visibility. Each idea listed on LaunchPad has a verified submission record, giving creators proof of originality while also showcasing their vision to potential backers. In short, LaunchPad is a public launch space for ideas to gain recognition, protection, and early traction.
               </p>
             </div>
             <div className="flex items-center justify-center -mt-16">
