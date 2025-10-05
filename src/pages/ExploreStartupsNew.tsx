@@ -206,65 +206,72 @@ export default function ExploreStartupsNew() {
 
   return (
     <div className="relative bg-black text-white min-h-screen">
-      {/* Navbar */}
-      <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-screen-xl px-4">
+      {/* Navbar - Mobile Optimized */}
+      <div className="fixed top-0 sm:top-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-screen-xl px-2 sm:px-4">
         <NavBar items={navItems} className="!relative !top-0 !left-0 !translate-x-0 !mb-0" />
       </div>
 
-      {/* Main Content */}
-      <div className="pt-32 px-4 pb-20">
+      {/* Main Content - Mobile Optimized */}
+      <div className="pt-20 sm:pt-24 md:pt-32 px-3 sm:px-4 pb-16 sm:pb-20">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-bold tracking-tight mb-8 text-center text-white">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-6 sm:mb-8 text-center text-white">
             Explore Startups
           </h1>
           
-          {/* Upload Button and Filter - Below title */}
-          <div className="flex justify-center items-center gap-4 mb-16">
+          {/* Upload Button and Filter - Mobile Stacked */}
+          <div className="flex flex-col sm:flex-row justify-center items-stretch sm:items-center gap-3 sm:gap-4 mb-10 sm:mb-16 max-w-md sm:max-w-none mx-auto">
             <button
               onClick={() => setShowUploadForm(true)}
-              className="bg-white text-black py-3 px-8 rounded-full font-semibold text-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.5)] hover:scale-105 shadow-[0_0_10px_rgba(255,255,255,0.3)] flex items-center gap-2"
+              className="bg-white text-black py-3 px-6 sm:px-8 rounded-full font-semibold text-base sm:text-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.5)] hover:scale-105 active:scale-95 shadow-[0_0_10px_rgba(255,255,255,0.3)] flex items-center justify-center gap-2 w-full sm:w-auto touch-manipulation"
             >
               <Upload className="w-5 h-5" />
-              Upload Your Idea
+              <span className="whitespace-nowrap">Upload Your Idea</span>
             </button>
 
-            {/* Filter Dropdown */}
-            <div className="relative">
+            {/* Filter Dropdown - Mobile Full Width */}
+            <div className="relative w-full sm:w-auto">
               <button
                 onClick={() => setShowFilterDropdown(!showFilterDropdown)}
-                className="bg-white/10 border border-white/20 text-white py-3 px-6 rounded-full font-semibold text-lg transition-all duration-300 hover:bg-white/20 hover:scale-105 flex items-center gap-2"
+                className="bg-white/10 border border-white/20 text-white py-3 px-6 rounded-full font-semibold text-base sm:text-lg transition-all duration-300 hover:bg-white/20 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 w-full sm:w-auto touch-manipulation"
               >
                 <Filter className="w-5 h-5" />
                 {selectedGenre}
               </button>
 
               {showFilterDropdown && (
-                <div className="absolute top-full mt-2 right-0 bg-black border border-white/20 rounded-lg shadow-xl overflow-hidden min-w-[200px] z-50">
-                  {genres.map((genre) => (
-                    <button
-                      key={genre}
-                      onClick={() => {
-                        setSelectedGenre(genre)
-                        setShowFilterDropdown(false)
-                      }}
-                      className={`w-full text-left px-4 py-3 transition-colors ${
-                        selectedGenre === genre 
-                          ? 'bg-purple-600 text-white' 
-                          : 'text-white/80 hover:bg-white/10'
-                      }`}
-                    >
-                      {genre}
-                    </button>
-                  ))}
-                </div>
+                <>
+                  {/* Backdrop for mobile */}
+                  <div 
+                    className="fixed inset-0 bg-black/50 z-40 sm:hidden"
+                    onClick={() => setShowFilterDropdown(false)}
+                  />
+                  <div className="absolute top-full mt-2 left-0 sm:left-auto sm:right-0 bg-black border border-white/20 rounded-lg shadow-xl overflow-hidden w-full sm:min-w-[200px] z-50 max-h-[60vh] overflow-y-auto">
+                    {genres.map((genre) => (
+                      <button
+                        key={genre}
+                        onClick={() => {
+                          setSelectedGenre(genre)
+                          setShowFilterDropdown(false)
+                        }}
+                        className={`w-full text-left px-4 py-3.5 sm:py-3 transition-colors touch-manipulation ${
+                          selectedGenre === genre 
+                            ? 'bg-purple-600 text-white' 
+                            : 'text-white/80 hover:bg-white/10 active:bg-white/20'
+                        }`}
+                      >
+                        {genre}
+                      </button>
+                    ))}
+                  </div>
+                </>
               )}
             </div>
           </div>
           
-          {/* Startups Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+          {/* Startups Grid - Mobile Responsive */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mt-8 sm:mt-12">
             {filteredStartups.map((startup) => (
-              <div key={startup.id} className="border border-white/20 rounded-lg p-6 hover:shadow-xl transition-all bg-black/60 backdrop-blur-sm hover:border-blue-500/50">
+              <div key={startup.id} className="border border-white/20 rounded-lg p-4 sm:p-6 hover:shadow-xl transition-all bg-black/60 backdrop-blur-sm hover:border-blue-500/50">
                 {startup.image && (
                   <img src={startup.image} alt={startup.title} className="w-full h-32 object-cover rounded-lg mb-4" />
                 )}
@@ -276,35 +283,35 @@ export default function ExploreStartupsNew() {
                   </span>
                 </div>
 
-                <h3 className="text-2xl font-bold mb-2 text-white">{startup.title}</h3>
-                <p className="text-blue-500 text-sm mb-4 font-medium">Founded by {startup.owner}</p>
+                <h3 className="text-xl sm:text-2xl font-bold mb-2 text-white">{startup.title}</h3>
+                <p className="text-blue-500 text-sm mb-3 sm:mb-4 font-medium">Founded by {startup.owner}</p>
                 
-                <p className="text-white/80 mb-4 text-sm leading-relaxed">{startup.description}</p>
+                <p className="text-white/80 mb-3 sm:mb-4 text-sm leading-relaxed">{startup.description}</p>
                 
-                {/* Email */}
+                {/* Email - Mobile Friendly */}
                 {startup.email && (
                   <div className="flex items-center gap-2 mb-3">
-                    <Mail className="w-4 h-4 text-blue-400" />
-                    <span className="text-sm text-white/70">{startup.email}</span>
+                    <Mail className="w-4 h-4 text-blue-400 flex-shrink-0" />
+                    <span className="text-xs sm:text-sm text-white/70 truncate">{startup.email}</span>
                   </div>
                 )}
 
-                {/* Social Links */}
+                {/* Social Links - Larger Touch Targets */}
                 {startup.socials && (
-                  <div className="flex gap-3 mb-4">
+                  <div className="flex gap-2 sm:gap-3 mb-4">
                     {startup.socials.twitter && (
-                      <a href={`https://twitter.com/${startup.socials.twitter}`} className="text-blue-400 hover:text-blue-300" target="_blank" rel="noopener noreferrer">
-                        <Twitter className="w-4 h-4" />
+                      <a href={`https://twitter.com/${startup.socials.twitter}`} className="text-blue-400 hover:text-blue-300 p-2 hover:bg-white/10 rounded-full transition-colors touch-manipulation" target="_blank" rel="noopener noreferrer">
+                        <Twitter className="w-5 h-5" />
                       </a>
                     )}
                     {startup.socials.linkedin && (
-                      <a href={`https://linkedin.com/in/${startup.socials.linkedin}`} className="text-blue-600 hover:text-blue-500" target="_blank" rel="noopener noreferrer">
-                        <Linkedin className="w-4 h-4" />
+                      <a href={`https://linkedin.com/in/${startup.socials.linkedin}`} className="text-blue-600 hover:text-blue-500 p-2 hover:bg-white/10 rounded-full transition-colors touch-manipulation" target="_blank" rel="noopener noreferrer">
+                        <Linkedin className="w-5 h-5" />
                       </a>
                     )}
                     {startup.socials.website && (
-                      <a href={`https://${startup.socials.website}`} className="text-green-400 hover:text-green-300" target="_blank" rel="noopener noreferrer">
-                        <Globe className="w-4 h-4" />
+                      <a href={`https://${startup.socials.website}`} className="text-green-400 hover:text-green-300 p-2 hover:bg-white/10 rounded-full transition-colors touch-manipulation" target="_blank" rel="noopener noreferrer">
+                        <Globe className="w-5 h-5" />
                       </a>
                     )}
                   </div>
@@ -313,13 +320,13 @@ export default function ExploreStartupsNew() {
                 <div className="space-y-3 mb-4">
                   <div className="bg-white/5 rounded p-3">
                     <p className="text-xs text-white/60 mb-1">Investor Returns</p>
-                    <p className="text-white text-sm">{startup.investorReturns}</p>
+                    <p className="text-white text-xs sm:text-sm">{startup.investorReturns}</p>
                   </div>
                   
                   <div className="flex justify-between items-center">
                     <div>
                       <p className="text-xs text-white/60">Funds Raised</p>
-                      <p className="text-green-400 font-bold text-lg">{startup.fundsAccumulated}</p>
+                      <p className="text-green-400 font-bold text-base sm:text-lg">{startup.fundsAccumulated}</p>
                     </div>
                   </div>
                 </div>
@@ -327,19 +334,20 @@ export default function ExploreStartupsNew() {
                 {/* Copyright */}
                 <p className="text-xs text-white/40 mb-4">{startup.copyright}</p>
                 
-                <div className="flex gap-2 mt-4">
+                {/* Action Buttons - Mobile Stacked */}
+                <div className="flex flex-col sm:flex-row gap-2 mt-4">
                   <button 
                     onClick={() => {
                       setInvestModal({ show: true, startupId: startup.id })
                       setShowFunders(startup.id)
                     }}
-                    className="flex-1 bg-gradient-to-br from-purple-600 via-purple-700 to-purple-900 text-white py-2 px-4 rounded-lg font-medium text-sm transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.8)] hover:scale-105"
+                    className="flex-1 bg-gradient-to-br from-purple-600 via-purple-700 to-purple-900 text-white py-3 sm:py-2 px-4 rounded-lg font-medium text-sm transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.8)] hover:scale-105 active:scale-95 touch-manipulation"
                   >
                     Invest Now →
                   </button>
                   <button 
                     onClick={() => setFeedbackModal({ show: true, startupId: startup.id })}
-                    className="flex-1 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 text-white py-2 px-4 rounded-lg font-medium text-sm transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] hover:scale-105 flex items-center justify-center gap-1"
+                    className="flex-1 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 text-white py-3 sm:py-2 px-4 rounded-lg font-medium text-sm transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] hover:scale-105 active:scale-95 flex items-center justify-center gap-1 touch-manipulation"
                   >
                     <MessageSquare className="w-4 h-4" />
                     Feedback ({startup.feedback.length})
@@ -351,33 +359,33 @@ export default function ExploreStartupsNew() {
 
           {/* No results message */}
           {filteredStartups.length === 0 && (
-            <div className="text-center py-20">
-              <p className="text-white/60 text-lg">No startups found in the {selectedGenre} category.</p>
+            <div className="text-center py-12 sm:py-20">
+              <p className="text-white/60 text-base sm:text-lg px-4">No startups found in the {selectedGenre} category.</p>
             </div>
           )}
         </div>
       </div>
 
-      {/* Upload Form Modal */}
+      {/* Upload Form Modal - Mobile Full Screen */}
       {showUploadForm && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-black border border-white/20 rounded-lg p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-3xl font-bold text-white">Upload Your Idea</h2>
-              <button onClick={() => setShowUploadForm(false)} className="text-white/60 hover:text-white">
+        <div className="fixed inset-0 bg-black/90 sm:bg-black/80 backdrop-blur-sm z-50 flex items-start sm:items-center justify-center overflow-y-auto">
+          <div className="bg-black border-0 sm:border border-white/20 rounded-none sm:rounded-lg p-4 sm:p-8 w-full sm:max-w-4xl min-h-screen sm:min-h-0 sm:max-h-[95vh] sm:my-4 overflow-y-auto">
+            <div className="flex justify-between items-center mb-4 sm:mb-6 sticky top-0 bg-black pb-4 z-10">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white">Upload Your Idea</h2>
+              <button onClick={() => setShowUploadForm(false)} className="text-white/60 hover:text-white p-2 touch-manipulation">
                 <X className="w-6 h-6" />
               </button>
             </div>
             
-            <form className="space-y-6" onSubmit={handleSubmit}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form className="space-y-4 sm:space-y-6" onSubmit={handleSubmit}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <input
                   type="text"
                   placeholder="Startup Title *"
                   required
                   value={formData.title}
                   onChange={(e) => setFormData({...formData, title: e.target.value})}
-                  className="w-full px-3 py-2 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/50"
+                  className="w-full px-4 py-3 sm:py-2.5 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/50 text-base"
                 />
                 <input
                   type="text"
@@ -385,7 +393,7 @@ export default function ExploreStartupsNew() {
                   required
                   value={formData.owner}
                   onChange={(e) => setFormData({...formData, owner: e.target.value})}
-                  className="w-full px-3 py-2 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/50"
+                  className="w-full px-4 py-3 sm:py-2.5 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/50 text-base"
                 />
               </div>
               
@@ -395,23 +403,23 @@ export default function ExploreStartupsNew() {
                 required
                 value={formData.description}
                 onChange={(e) => setFormData({...formData, description: e.target.value})}
-                className="w-full px-3 py-2 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 bg-black/60 text-white placeholder:text-white/50"
+                className="w-full px-4 py-3 sm:py-2.5 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 bg-black/60 text-white placeholder:text-white/50 text-base resize-none"
               />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <input
                   type="text"
                   placeholder="Investor Returns *"
                   required
                   value={formData.investorReturns}
                   onChange={(e) => setFormData({...formData, investorReturns: e.target.value})}
-                  className="w-full px-3 py-2 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 bg-black/60 text-white placeholder:text-white/50"
+                  className="w-full px-4 py-3 sm:py-2.5 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 bg-black/60 text-white placeholder:text-white/50 text-base"
                 />
                 
                 <select
                   value={formData.genre}
                   onChange={(e) => setFormData({...formData, genre: e.target.value})}
-                  className="w-full px-3 py-2 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white"
+                  className="w-full px-4 py-3 sm:py-2.5 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white text-base"
                 >
                   {genres.filter(g => g !== "All").map(genre => (
                     <option key={genre} value={genre}>{genre}</option>
@@ -419,14 +427,14 @@ export default function ExploreStartupsNew() {
                 </select>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <input
                   type="email"
                   placeholder="Email *"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="w-full px-3 py-2 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/50"
+                  className="w-full px-4 py-3 sm:py-2.5 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/50 text-base"
                 />
                 <input
                   type="text"
@@ -434,7 +442,7 @@ export default function ExploreStartupsNew() {
                   required
                   value={formData.fundsAccumulated}
                   onChange={(e) => setFormData({...formData, fundsAccumulated: e.target.value})}
-                  className="w-full px-3 py-2 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/50"
+                  className="w-full px-4 py-3 sm:py-2.5 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/50 text-base"
                 />
               </div>
 
@@ -444,55 +452,55 @@ export default function ExploreStartupsNew() {
                 required
                 value={formData.copyright}
                 onChange={(e) => setFormData({...formData, copyright: e.target.value})}
-                className="w-full px-3 py-2 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/50"
+                className="w-full px-4 py-3 sm:py-2.5 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/50 text-base"
               />
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
                 <input
                   type="text"
                   placeholder="Twitter Handle"
                   value={formData.twitter}
                   onChange={(e) => setFormData({...formData, twitter: e.target.value})}
-                  className="w-full px-3 py-2 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/50"
+                  className="w-full px-4 py-3 sm:py-2.5 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/50 text-base"
                 />
                 <input
                   type="text"
                   placeholder="LinkedIn"
                   value={formData.linkedin}
                   onChange={(e) => setFormData({...formData, linkedin: e.target.value})}
-                  className="w-full px-3 py-2 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/50"
+                  className="w-full px-4 py-3 sm:py-2.5 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/50 text-base"
                 />
                 <input
                   type="text"
                   placeholder="Website"
                   value={formData.website}
                   onChange={(e) => setFormData({...formData, website: e.target.value})}
-                  className="w-full px-3 py-2 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/50"
+                  className="w-full px-4 py-3 sm:py-2.5 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/50 text-base"
                 />
               </div>
 
               <div className="space-y-4">
                 <label className="block text-sm font-medium text-white">Upload Image/Video</label>
-                <div className="flex gap-4">
-                  <label className="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg cursor-pointer transition-colors">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                  <label className="flex items-center gap-2 bg-white/10 hover:bg-white/20 active:bg-white/30 px-4 py-3 rounded-lg cursor-pointer transition-colors justify-center touch-manipulation">
                     <Camera className="w-5 h-5" />
-                    <span>Image</span>
+                    <span className="text-sm sm:text-base">Image</span>
                     <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
                   </label>
-                  <label className="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg cursor-pointer transition-colors">
+                  <label className="flex items-center gap-2 bg-white/10 hover:bg-white/20 active:bg-white/30 px-4 py-3 rounded-lg cursor-pointer transition-colors justify-center touch-manipulation">
                     <Video className="w-5 h-5" />
-                    <span>Video</span>
+                    <span className="text-sm sm:text-base">Video</span>
                     <input type="file" accept="video/*" className="hidden" />
                   </label>
                 </div>
                 {formData.image && (
-                  <img src={formData.image} alt="Preview" className="w-32 h-32 object-cover rounded-lg" />
+                  <img src={formData.image} alt="Preview" className="w-full sm:w-32 h-32 object-cover rounded-lg" />
                 )}
               </div>
               
               <button
                 type="submit"
-                className="w-full bg-gradient-to-br from-purple-600 via-purple-700 to-purple-900 text-white py-3 px-4 rounded-lg font-medium text-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.8)] hover:scale-105"
+                className="w-full bg-gradient-to-br from-purple-600 via-purple-700 to-purple-900 text-white py-4 sm:py-3 px-4 rounded-lg font-medium text-base sm:text-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.8)] active:scale-95 touch-manipulation sticky bottom-0 sm:static"
               >
                 Submit Startup Idea
               </button>
@@ -501,69 +509,71 @@ export default function ExploreStartupsNew() {
         </div>
       )}
 
-      {/* Investment Modal with Funders List */}
+      {/* Investment Modal - Mobile Optimized */}
       {investModal.show && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-black border border-white/20 rounded-lg p-8 max-w-4xl w-full flex gap-8">
-            <div className="flex-1">
-              <h3 className="text-2xl font-bold text-white mb-6">Invest in {startups.find(s => s.id === investModal.startupId)?.title}</h3>
-              <div className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  value={investData.name}
-                  onChange={(e) => setInvestData({...investData, name: e.target.value})}
-                  className="w-full px-3 py-2 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 bg-black/60 text-white placeholder:text-white/50"
-                />
-                <input
-                  type="number"
-                  placeholder="Investment Amount ($)"
-                  value={investData.amount}
-                  onChange={(e) => setInvestData({...investData, amount: e.target.value})}
-                  className="w-full px-3 py-2 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 bg-black/60 text-white placeholder:text-white/50"
-                />
-                <div className="flex gap-3 mt-6">
-                  <button
-                    onClick={() => handleInvest(investModal.startupId!)}
-                    className="flex-1 bg-gradient-to-br from-purple-600 via-purple-700 to-purple-900 text-white py-2 px-4 rounded-lg font-medium transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.8)] hover:scale-105"
-                  >
-                    Confirm Investment
-                  </button>
-                  <button
-                    onClick={() => setInvestModal({ show: false, startupId: null })}
-                    className="px-6 py-2 border border-purple-500/50 rounded-lg text-white hover:bg-purple-500/20 transition-colors"
-                  >
-                    Cancel
-                  </button>
+        <div className="fixed inset-0 bg-black/90 sm:bg-black/80 backdrop-blur-sm z-50 flex items-start sm:items-center justify-center overflow-y-auto">
+          <div className="bg-black border-0 sm:border border-white/20 rounded-none sm:rounded-lg p-4 sm:p-8 w-full sm:max-w-4xl min-h-screen sm:min-h-0 sm:max-h-[95vh] sm:my-4 overflow-y-auto">
+            <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
+              <div className="flex-1">
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">Invest in {startups.find(s => s.id === investModal.startupId)?.title}</h3>
+                <div className="space-y-4">
+                  <input
+                    type="text"
+                    placeholder="Your Name"
+                    value={investData.name}
+                    onChange={(e) => setInvestData({...investData, name: e.target.value})}
+                    className="w-full px-4 py-3 sm:py-2.5 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 bg-black/60 text-white placeholder:text-white/50 text-base"
+                  />
+                  <input
+                    type="number"
+                    placeholder="Investment Amount ($)"
+                    value={investData.amount}
+                    onChange={(e) => setInvestData({...investData, amount: e.target.value})}
+                    className="w-full px-4 py-3 sm:py-2.5 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 bg-black/60 text-white placeholder:text-white/50 text-base"
+                  />
+                  <div className="flex flex-col sm:flex-row gap-3 mt-6">
+                    <button
+                      onClick={() => handleInvest(investModal.startupId!)}
+                      className="flex-1 bg-gradient-to-br from-purple-600 via-purple-700 to-purple-900 text-white py-3 sm:py-2 px-4 rounded-lg font-medium transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.8)] active:scale-95 touch-manipulation"
+                    >
+                      Confirm Investment
+                    </button>
+                    <button
+                      onClick={() => setInvestModal({ show: false, startupId: null })}
+                      className="px-6 py-3 sm:py-2 border border-purple-500/50 rounded-lg text-white hover:bg-purple-500/20 active:bg-purple-500/30 transition-colors touch-manipulation"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            
-            {/* Funders List */}
-            <div className="flex-1 border-l border-white/20 pl-8">
-              <h4 className="text-xl font-bold text-white mb-4">Current Funders</h4>
-              <div className="space-y-3 max-h-64 overflow-y-auto">
-                {startups.find(s => s.id === investModal.startupId)?.funders.map((funder, idx) => (
-                  <div key={idx} className="bg-white/5 rounded-lg p-3">
-                    <div className="flex justify-between items-center">
-                      <p className="font-semibold text-purple-300">{funder.name}</p>
-                      <p className="text-green-400 font-bold">${funder.amount.toLocaleString()}</p>
+              
+              {/* Funders List */}
+              <div className="flex-1 border-t lg:border-t-0 lg:border-l border-white/20 pt-6 lg:pt-0 lg:pl-8">
+                <h4 className="text-lg sm:text-xl font-bold text-white mb-4">Current Funders</h4>
+                <div className="space-y-3 max-h-64 overflow-y-auto">
+                  {startups.find(s => s.id === investModal.startupId)?.funders.map((funder, idx) => (
+                    <div key={idx} className="bg-white/5 rounded-lg p-3">
+                      <div className="flex justify-between items-center">
+                        <p className="font-semibold text-purple-300 text-sm sm:text-base">{funder.name}</p>
+                        <p className="text-green-400 font-bold text-sm sm:text-base">${funder.amount.toLocaleString()}</p>
+                      </div>
+                      <p className="text-xs text-white/40">{funder.date}</p>
                     </div>
-                    <p className="text-xs text-white/40">{funder.date}</p>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* Feedback Modal */}
+      {/* Feedback Modal - Mobile Optimized */}
       {feedbackModal.show && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900 border border-blue-500/30 rounded-lg p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-            <h3 className="text-2xl font-bold text-white mb-2">Public Feedback</h3>
-            <p className="text-blue-400 mb-6">{startups.find(s => s.id === feedbackModal.startupId)?.title}</p>
+        <div className="fixed inset-0 bg-black/90 sm:bg-black/80 backdrop-blur-sm z-50 flex items-start sm:items-center justify-center overflow-y-auto">
+          <div className="bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900 border-0 sm:border border-blue-500/30 rounded-none sm:rounded-lg p-4 sm:p-8 w-full sm:max-w-2xl min-h-screen sm:min-h-0 sm:max-h-[90vh] sm:my-4 overflow-y-auto">
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Public Feedback</h3>
+            <p className="text-blue-400 mb-6 text-sm sm:text-base">{startups.find(s => s.id === feedbackModal.startupId)?.title}</p>
             
             {/* Public Comments List */}
             <div className="mb-6 max-h-[300px] overflow-y-auto space-y-3">
@@ -572,9 +582,9 @@ export default function ExploreStartupsNew() {
                 <p className="text-white/50 text-sm italic">No comments yet. Be the first to share your thoughts!</p>
               ) : (
                 startups.find(s => s.id === feedbackModal.startupId)?.feedback.map((fb, idx) => (
-                  <div key={idx} className="p-4 bg-black/40 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-colors">
+                  <div key={idx} className="p-3 sm:p-4 bg-black/40 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-colors">
                     <div className="flex justify-between items-start mb-2">
-                      <p className="font-semibold text-blue-300">{fb.name}</p>
+                      <p className="font-semibold text-blue-300 text-sm sm:text-base">{fb.name}</p>
                       <p className="text-xs text-white/40">{fb.date}</p>
                     </div>
                     <p className="text-white/80 text-sm leading-relaxed">{fb.comment}</p>
@@ -592,7 +602,7 @@ export default function ExploreStartupsNew() {
                     type="text"
                     value={feedbackData.name}
                     onChange={(e) => setFeedbackData({...feedbackData, name: e.target.value})}
-                    className="w-full px-4 py-2 border border-blue-500/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/40"
+                    className="w-full px-4 py-3 sm:py-2 border border-blue-500/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/40 text-base"
                     placeholder="Your name"
                   />
                 </div>
@@ -601,14 +611,14 @@ export default function ExploreStartupsNew() {
                     rows={3}
                     value={feedbackData.comment}
                     onChange={(e) => setFeedbackData({...feedbackData, comment: e.target.value})}
-                    className="w-full px-4 py-2 border border-blue-500/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/40"
+                    className="w-full px-4 py-3 sm:py-2 border border-blue-500/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white placeholder:text-white/40 text-base resize-none"
                     placeholder="Share your thoughts..."
                   />
                 </div>
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <button
                     onClick={() => handleFeedback(feedbackModal.startupId!)}
-                    className="flex-1 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 text-white py-2 px-4 rounded-lg font-medium transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] hover:scale-105"
+                    className="flex-1 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 text-white py-3 sm:py-2 px-4 rounded-lg font-medium transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] active:scale-95 touch-manipulation"
                   >
                     Post Comment
                   </button>
@@ -617,7 +627,7 @@ export default function ExploreStartupsNew() {
                       setFeedbackModal({ show: false, startupId: null })
                       setFeedbackData({ name: "", comment: "" })
                     }}
-                    className="px-6 py-2 border border-blue-500/50 rounded-lg text-white hover:bg-blue-500/20 transition-colors"
+                    className="px-6 py-3 sm:py-2 border border-blue-500/50 rounded-lg text-white hover:bg-blue-500/20 active:bg-blue-500/30 transition-colors touch-manipulation"
                   >
                     Close
                   </button>
