@@ -29,7 +29,7 @@ export default function HomePage() {
   }, [])
 
   const globeOpacity = Math.max(0, 1 - scrollY / 800)
-  const globeTranslateY = -scrollY * 0.5
+  const scrollTranslateY = -scrollY * 0.5
 
   return (
     <div className="relative bg-black text-white">
@@ -43,7 +43,7 @@ export default function HomePage() {
         className="fixed inset-0 hidden sm:flex items-center justify-center pointer-events-none -mt-20 transition-all duration-300"
         style={{
           opacity: globeOpacity,
-          transform: `translateY(${globeTranslateY}px)`
+          transform: `translateY(${scrollTranslateY}px)`
         }}
       >
         <div className="absolute inset-0 flex items-center justify-center">
@@ -59,10 +59,18 @@ export default function HomePage() {
         <Launchpad className="!relative !max-w-none !w-full !h-full opacity-80" />
       </div>
 
-      {/* Hero Section - Mobile Optimized */}
+      {/* Hero Section - Mobile Optimized with Sync Scroll */}
       <section id="home" className="relative min-h-screen flex flex-col items-center justify-center px-3 sm:px-4 py-20">
-        <div className="text-center z-10 relative -mt-16 sm:-mt-32">
-          <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-10xl font-bold tracking-wider mb-4 sm:mb-6 text-white uppercase drop-shadow-[0_0_30px_rgba(255,255,255,0.5)]">
+        <div 
+          className="text-center z-10 relative -mt-16 sm:-mt-32"
+          style={{
+            transform: `translateY(${scrollTranslateY}px)`
+          }}
+        >
+          <h1 
+            className="text-4xl sm:text-6xl md:text-8xl lg:text-10xl tracking-wider mb-4 sm:mb-6 text-white uppercase drop-shadow-[0_0_30px_rgba(255,255,255,0.5)]"
+            style={{ fontFamily: 'Inter', fontWeight: 900 }}
+          >
             Launchpad
           </h1>
           <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white font-light max-w-4xl mx-auto drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] text-center px-4 mb-8 sm:mb-12">
