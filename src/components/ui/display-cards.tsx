@@ -16,8 +16,8 @@ interface DisplayCardProps {
 function DisplayCard({
   className,
   icon = <Sparkles className="size-4 text-purple-300" />,
-  title = "Featured",
-  description = "Discover amazing content",
+  title = "For Founders",
+  description = "showcase your ideas",
   date = "Just now",
   iconClassName = "text-purple-500",
   titleClassName = "text-purple-500",
@@ -48,12 +48,21 @@ interface DisplayCardsProps {
 export default function DisplayCards({ cards }: DisplayCardsProps) {
   const defaultCards = [
     {
+      title: "For Founders",
+      description: "To showcase ideas",
+      date: "Start now",
       className: "[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-black/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration:700 hover:grayscale-0 before:left-0 before:top-0",
     },
     {
+      title: "For Supporters",
+      description: "To back amazing ideas",
+      date: "Join now",
       className: "[grid-area:stack] translate-x-16 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-black/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration:700 hover:grayscale-0 before:left-0 before:top-0",
     },
     {
+      title: "For Everyone",
+      description: "A community where ideas grow",
+      date: "Explore now",
       className: "[grid-area:stack] translate-x-32 translate-y-20 hover:translate-y-10",
     },
   ];
