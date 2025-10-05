@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { NavBar } from "@/components/ui/tubelight-navbar"
-import { Home, Lightbulb, Rocket, Sparkles, Upload, X, Camera, Video, Mail, Twitter, Linkedin, Globe, MessageSquare } from "lucide-react"
+import { Home, Lightbulb, Rocket, Sparkles, Upload, X, Camera, Video, Mail, Twitter, Linkedin, Globe, MessageSquare, Filter } from "lucide-react"
 
 interface Startup {
   id: number
@@ -11,6 +11,7 @@ interface Startup {
   copyright: string
   fundsAccumulated: string
   totalFunds: number
+  genre: string
   image?: string
   email?: string
   socials?: { twitter?: string; linkedin?: string; website?: string }
@@ -26,6 +27,8 @@ export default function ExploreStartupsNew() {
     { name: "About", url: "/#about", icon: Rocket },
   ]
 
+  const genres = ["All", "Tech", "Healthcare", "Nature", "Finance", "Crypto", "SaaS", "AI", "Other"]
+
   const [startups, setStartups] = useState<Startup[]>([
     {
       id: 1,
@@ -36,6 +39,7 @@ export default function ExploreStartupsNew() {
       copyright: "© 2024 EcoTech Solutions Inc.",
       fundsAccumulated: "$1.2M",
       totalFunds: 1200000,
+      genre: "Nature",
       email: "sarah@ecotech.com",
       socials: { twitter: "@ecotech", linkedin: "ecotech-solutions", website: "ecotech.com" },
       feedback: [],
@@ -53,6 +57,7 @@ export default function ExploreStartupsNew() {
       copyright: "© 2024 HealthAI Corp.",
       fundsAccumulated: "$2.5M",
       totalFunds: 2500000,
+      genre: "Healthcare",
       email: "james@healthai.com",
       socials: { twitter: "@healthai", linkedin: "healthai-corp" },
       feedback: [],
@@ -74,7 +79,8 @@ export default function ExploreStartupsNew() {
     twitter: "",
     linkedin: "",
     website: "",
-    image: ""
+    image: "",
+    genre: "Tech"
   })
 
   const [showUploadForm, setShowUploadForm] = useState(false)
@@ -89,6 +95,8 @@ export default function ExploreStartupsNew() {
     startupId: null
   })
   const [feedbackData, setFeedbackData] = useState({ name: "", comment: "" })
+  const [selectedGenre, setSelectedGenre] = useState("All")
+  const [showFilterDropdown, setShowFilterDropdown] = useState(false)
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -117,6 +125,7 @@ export default function ExploreStartupsNew() {
       copyright: formData.copyright,
       fundsAccumulated: formData.fundsAccumulated,
       totalFunds: totalFunds,
+      genre: formData.genre,
       image: formData.image,
       email: formData.email,
       socials: {
@@ -130,7 +139,7 @@ export default function ExploreStartupsNew() {
     setStartups([...startups, newStartup])
     setFormData({
       title: "", owner: "", description: "", investorReturns: "", copyright: "", 
-      fundsAccumulated: "", email: "", twitter: "", linkedin: "", website: "", image: ""
+      fundsAccumulated: "", email: "", twitter: "", linkedin: "", website: "", image: "", genre: "Tech"
     })
     setShowUploadForm(false)
   }
@@ -191,6 +200,10 @@ export default function ExploreStartupsNew() {
     return `$${amount}`
   }
 
+  const filteredStartups = selectedGenre === "All" 
+    ? startups 
+    : startups.filter(startup => startup.genre === selectedGenre)
+
   return (
     <div className="relative bg-black text-white min-h-screen">
       {/* Navbar */}
@@ -205,8 +218,8 @@ export default function ExploreStartupsNew() {
             Explore Startups
           </h1>
           
-          {/* Upload Button - Below title */}
-          <div className="flex justify-center mb-16">
+          {/* Upload Button and Filter - Below title */}
+          <div className="flex justify-center items-center gap-4 mb-16">
             <button
               onClick={() => setShowUploadForm(true)}
               className="bg-white text-black py-3 px-8 rounded-full font-semibold text-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.5)] hover:scale-105 shadow-[0_0_10px_rgba(255,255,255,0.3)] flex items-center gap-2"
@@ -214,15 +227,55 @@ export default function ExploreStartupsNew() {
               <Upload className="w-5 h-5" />
               Upload Your Idea
             </button>
+
+            {/* Filter Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setShowFilterDropdown(!showFilterDropdown)}
+                className="bg-white/10 border border-white/20 text-white py-3 px-6 rounded-full font-semibold text-lg transition-all duration-300 hover:bg-white/20 hover:scale-105 flex items-center gap-2"
+              >
+                <Filter className="w-5 h-5" />
+                {selectedGenre}
+              </button>
+
+              {showFilterDropdown && (
+                <div className="absolute top-full mt-2 right-0 bg-black border border-white/20 rounded-lg shadow-xl overflow-hidden min-w-[200px] z-50">
+                  {genres.map((genre) => (
+                    <button
+                      key={genre}
+                      onClick={() => {
+                        setSelectedGenre(genre)
+                        setShowFilterDropdown(false)
+                      }}
+                      className={`w-full text-left px-4 py-3 transition-colors ${
+                        selectedGenre === genre 
+                          ? 'bg-purple-600 text-white' 
+                          : 'text-white/80 hover:bg-white/10'
+                      }`}
+                    >
+                      {genre}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
           
           {/* Startups Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-            {startups.map((startup) => (
+            {filteredStartups.map((startup) => (
               <div key={startup.id} className="border border-white/20 rounded-lg p-6 hover:shadow-xl transition-all bg-black/60 backdrop-blur-sm hover:border-blue-500/50">
                 {startup.image && (
                   <img src={startup.image} alt={startup.title} className="w-full h-32 object-cover rounded-lg mb-4" />
                 )}
+                
+                {/* Genre Badge */}
+                <div className="mb-3">
+                  <span className="inline-block bg-purple-600/30 text-purple-300 text-xs font-semibold px-3 py-1 rounded-full border border-purple-500/50">
+                    {startup.genre}
+                  </span>
+                </div>
+
                 <h3 className="text-2xl font-bold mb-2 text-white">{startup.title}</h3>
                 <p className="text-blue-500 text-sm mb-4 font-medium">Founded by {startup.owner}</p>
                 
@@ -295,6 +348,13 @@ export default function ExploreStartupsNew() {
               </div>
             ))}
           </div>
+
+          {/* No results message */}
+          {filteredStartups.length === 0 && (
+            <div className="text-center py-20">
+              <p className="text-white/60 text-lg">No startups found in the {selectedGenre} category.</p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -338,14 +398,26 @@ export default function ExploreStartupsNew() {
                 className="w-full px-3 py-2 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 bg-black/60 text-white placeholder:text-white/50"
               />
 
-              <input
-                type="text"
-                placeholder="Investor Returns *"
-                required
-                value={formData.investorReturns}
-                onChange={(e) => setFormData({...formData, investorReturns: e.target.value})}
-                className="w-full px-3 py-2 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 bg-black/60 text-white placeholder:text-white/50"
-              />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <input
+                  type="text"
+                  placeholder="Investor Returns *"
+                  required
+                  value={formData.investorReturns}
+                  onChange={(e) => setFormData({...formData, investorReturns: e.target.value})}
+                  className="w-full px-3 py-2 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 bg-black/60 text-white placeholder:text-white/50"
+                />
+                
+                <select
+                  value={formData.genre}
+                  onChange={(e) => setFormData({...formData, genre: e.target.value})}
+                  className="w-full px-3 py-2 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black/60 text-white"
+                >
+                  {genres.filter(g => g !== "All").map(genre => (
+                    <option key={genre} value={genre}>{genre}</option>
+                  ))}
+                </select>
+              </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <input
