@@ -28,6 +28,7 @@
   "homepage": "https://github.com/actastudios/global-hackathon-v1#readme",
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",
+    "@types/react-router-dom": "^5.3.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cobe": "^0.6.3",
@@ -35,6 +36,7 @@
     "lucide-react": "^0.344.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^7.9.3",
     "simplex-noise": "^4.0.1",
     "tailwind-merge": "^2.2.1",
     "three": "^0.160.0"
